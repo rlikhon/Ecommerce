@@ -1,0 +1,287 @@
+/**** Google Font **********/
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
+/**** Global Variables **********/
+$primary-font: "DM Sans", sans-serif;
+$primary-white: #fff;
+$primary-color: #43c3d1;
+$primary-black: #061123;
+$secondary-color: #0284ff;
+$tertiary-color: #2f4858;
+
+body {
+  font-family: $primary-font;
+  font-size: 1em;
+  color: $primary-black;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+a {
+  text-decoration: none;
+  color: $primary-black;
+  &::hover {
+    color: $primary-color;
+  }
+}
+
+.primary-text {
+  color: $primary-color;
+}
+
+.secondary-text {
+  color: $secondary-color;
+}
+
+ul {
+  padding-left: 0;
+  li {
+    list-style: none;
+  }
+}
+
+.container {
+  max-width: 1540px;
+}
+
+.nav-tabs {
+  .nav-link{
+    color: #0077b5;
+  }
+}
+
+.btn {
+  &.btn-size {
+    background-color: rgba($primary-black, 0.03);
+    border-color: rgba($primary-black, 0.05);
+    padding: 7px 15px;
+    &.active {
+      border-color: rgba($primary-black, 0.2);
+    }
+    &:hover {
+      border-color: rgba($primary-black, 0.2);
+      color: $primary-black;
+    }
+  }
+  &.btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    padding: 7px 25px;
+    &:hover {
+      background-color: $primary-black;
+      border-color: $primary-black;
+      color: $primary-white;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: $primary-black;
+    border-color: $primary-black;
+    color: $primary-white;
+    padding: 7px 25px;
+    &:hover {
+      background-color: $primary-color;
+      border-color: $primary-color;
+      color: $primary-white;
+    }
+  }
+}
+
+header {
+  .navbar-expand-lg {
+    .navbar-nav {
+      .nav-link {
+        font-size: 1.2em;
+        font-weight: 500;
+        color: $primary-black;
+        padding: 10px 15px;
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  background-color: $tertiary-color;
+  h2 {
+    font-size: 1.2em;
+    color: $primary-white;
+  }
+  ul {
+    li {
+      a {
+        font-size: 1em;
+        color: $primary-white;
+        text-transform: capitalize;
+      }
+      &:hover {
+        a {
+          color: #0077b5; /* LinkedIn Blue */
+          transition: 0.3s;
+        }
+      }
+    }
+  }
+  .spotlight {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    ul {
+      li {
+        a {
+          color: $primary-white;
+          &:hover {
+            color: $primary-color;
+            transition: 0.3s;
+          }
+          p {
+            color: $primary-white;
+            &:hover {
+              color: $primary-color;
+              transition: 0.3s;
+            }
+          }
+          svg {
+            color: $primary-white;
+            &:hover {
+              color: $primary-color;
+              transition: 0.3s;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.section-1 {
+  .swiper {
+    .swiper-wrapper {
+      .swiper-slide {
+        height: 650px;
+        .content {
+          background-size: cover;
+          background-position: center top !important;
+          background-repeat: no-repeat;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.product {
+  .card-img {
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+    img {
+      border-radius: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  &:hover {
+    img {
+      scale: 1.15;
+    }
+  }
+
+  .card-body {
+    padding: 0;
+
+    a {
+      font-size: 1.1em;
+      font-weight: 500;
+      color: $primary-black;
+      margin-bottom: 10px;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+    .price {
+      font-size: 1.1em;
+      font-weight: 500;
+      color: $primary-black;
+      margin-bottom: 10px;
+      padding-top: 10px;
+      span {
+        color: rgba($primary-black, 0.5);
+        font-size: 1.2em;
+        text-decoration: line-through;
+      }
+    }
+  }
+}
+
+.product-detail{
+  .mySwiper{
+    .swiper-slide{
+      height: auto !important;
+    }
+  }
+  .price{
+      font-weight: 500;
+      span{
+        color: rgba($primary-black, 0.5);
+      }
+    }
+}
+
+.login{
+  .login-form{
+    //
+  }
+}
+
+.sidebar{
+  ul{
+    li{
+      border-bottom: 1px solid rgba($primary-black, 0.1);
+      margin-bottom: 2px;      
+      a{
+        display: block;        
+        padding: 10px;
+        color: $primary-black;
+        font-weight: 500;
+        transition: 0.3s;
+        text-transform: capitalize;
+        &:hover{
+          color: $primary-color;
+        }
+        &.active{
+          background-color: $primary-color;
+          color: $primary-white;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 200px) and (max-width: 768px px) {
+  .section-1 {
+    .swiper {
+      .swiper-wrapper {
+        .swiper-slide {
+          height: 400px;
+        }
+      }
+    }
+  }
+}
