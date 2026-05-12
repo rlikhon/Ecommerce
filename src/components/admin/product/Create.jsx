@@ -102,10 +102,7 @@ const Create = ({ placeholder }) => {
     console.log(gallaryImages);
   };
 
-  const deleteImage2 = (image) => {
-    const newGallary = gallaryImages.filter((gallary) => gallary !== image);
-    setGallaryImages(newGallary);
-  };
+  
 
   const [isUploading, setIsUploading] = useState(false);
   const handleFile = async (e) => {
