@@ -17,7 +17,7 @@ client.interceptors.response.use(
   (err) => {
     const status = err.response?.status;
     const msg = err.response?.data?.message || "Something went wrong";
-    console.log(msg);
+    //console.log(msg);
 
     if (status === 401) {
       localStorage.removeItem("token");

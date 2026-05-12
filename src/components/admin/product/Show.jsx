@@ -23,6 +23,7 @@ const Show = () => {
       const res = await showProductService();
       // Ensure we handle the data structure correctly (res.data.data)
       setProducts(res.data.data || []);
+      console.log(res.data.data);
     } catch (error) {
       console.error("Failed to fetch products:", error);
     } finally {
@@ -31,27 +32,27 @@ const Show = () => {
   }, []);
 
   const deleteProduct = async (productId) => {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-      });
-  
-      if (!result.isConfirmed) return;
-  
-      try {
-        const res = await deleteProductService(productId);
-  
-        if (res.status === 200) {
-          Swal.fire("Deleted!", "Product has been deleted.", "success");
-          fetchProducts();
-        }
-      } catch (error) {
-        Swal.fire("Error!", "Something went wrong.", "error");
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await deleteProductService(productId);
+
+      if (res.status === 200) {
+        Swal.fire("Deleted!", "Product has been deleted.", "success");
+        fetchProducts();
       }
-    };
+    } catch (error) {
+      Swal.fire("Error!", "Something went wrong.", "error");
+    }
+  };
 
   useEffect(() => {
     // Fetch products on component mount
@@ -84,6 +85,7 @@ const Show = () => {
                         <th>Price</th>
                         <th>Qty</th>
                         <th>Sku</th>
+                        <th>Featured</th>
                         <th>Status</th>
                         <th className="text-end pe-4">Actions</th>
                       </tr>
@@ -100,17 +102,28 @@ const Show = () => {
                           <tr key={product.id}>
                             <td className="ps-4">{product.id}</td>
                             <td className="fw-semibold">
-                              <img
-                                className="rounded-2"
-                                src={`/uploads/${product.image_url}`}
-                                alt=""
-                                width="50"
-                              />
+                              {product.image_url == null ? (
+                                <img src="https:\\placehold.co\50x50" />
+                              ) : (
+                                <img
+                                  className="rounded-2"
+                                  src={`${product.image_url}`}
+                                  alt=""
+                                  width="50"
+                                />
+                              )}
                             </td>
                             <td className="fw-semibold">{product.title}</td>
                             <td>{product.price}</td>
                             <td>{product.qty}</td>
                             <td>{product.sku}</td>
+                            <td>
+                              {product.is_featured === "yes" ? (
+                                <Badge bg="success">Yes</Badge>
+                              ) : (
+                                <Badge bg="danger">No</Badge>
+                              )}
+                            </td>
                             <td>
                               {product.status === 1 ? (
                                 <Badge bg="success">Active</Badge>
