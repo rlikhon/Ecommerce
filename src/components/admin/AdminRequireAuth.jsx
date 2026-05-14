@@ -1,13 +1,16 @@
-import { useContext } from "react";
+// src/components/admin/AdminRequireAuth.jsx
+import React, { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom"; // ✅ Import Outlet
 import { AdminAuthContext } from "../context/AdminAuth";
-import { Navigate } from "react-router-dom";
 
-export const AdminRequireAuth = ({children}) => {
-  const {user} = useContext(AdminAuthContext);
+export const AdminRequireAuth = () => {
+  const { user } = useContext(AdminAuthContext);
 
+  // If unauthorized, intercept execution rendering tree and force a redirect
   if (!user) {
-    return <Navigate to={'/admin/login'} />;
+    return <Navigate to="/admin/login" replace />;
   }
 
-  return children;
-}
+  // ✅ Rent out the shared child component paths inside the parent routing wrapper
+  return <Outlet />;
+};
