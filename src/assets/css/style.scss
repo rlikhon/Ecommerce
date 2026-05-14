@@ -60,7 +60,7 @@ ul {
 }
 
 .nav-tabs {
-  .nav-link{
+  .nav-link {
     color: #0077b5;
   }
 }
@@ -230,44 +230,87 @@ footer {
   }
 }
 
-.product-detail{
-  .mySwiper{
-    .swiper-slide{
+.product-detail {
+  .mySwiper {
+    .swiper-slide {
       height: auto !important;
     }
   }
-  .price{
-      font-weight: 500;
-      span{
-        color: rgba($primary-black, 0.5);
-      }
+  .price {
+    font-weight: 500;
+    span {
+      color: rgba($primary-black, 0.5);
     }
+  }
 }
 
-.login{
-  .login-form{
+.login {
+  .login-form {
     //
   }
 }
 
-.sidebar{
-  ul{
-    li{
-      border-bottom: 1px solid rgba($primary-black, 0.1);
-      margin-bottom: 2px;      
-      a{
-        display: block;        
-        padding: 10px;
-        color: $primary-black;
+.sidebar {
+  border-radius: 12px;
+  overflow: hidden;
+
+  ul {
+    li {
+      margin: 2px 8px;
+
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 16px;
+        color: rgba($primary-black, 0.8);
         font-weight: 500;
-        transition: 0.3s;
+        font-size: 0.95em;
+        border-radius: 8px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         text-transform: capitalize;
-        &:hover{
-          color: $primary-color;
+
+        .sidebar-icon {
+          color: rgba($primary-black, 0.4);
+          transition: color 0.25s ease;
         }
-        &.active{
+
+        &:hover {
+          color: $primary-color;
+          background-color: rgba($primary-color, 0.06);
+
+          .sidebar-icon {
+            color: $primary-color;
+            transform: translateX(2px);
+          }
+        }
+
+        &.active {
           background-color: $primary-color;
           color: $primary-white;
+          font-weight: 600;
+          box-shadow: 0 4px 12px rgba($primary-color, 0.25);
+
+          .sidebar-icon {
+            color: $primary-white;
+          }
+
+          &:hover {
+            background-color: darken($primary-color, 5%);
+            color: $primary-white;
+          }
+        }
+
+        // Action styling customization override rules for signout items
+        &.logout-link {
+          &:hover {
+            background-color: rgba(#dc3545, 0.08);
+            color: #dc3545;
+
+            .sidebar-icon {
+              color: #dc3545;
+            }
+          }
         }
       }
     }
