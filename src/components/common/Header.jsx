@@ -1,61 +1,103 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Nav, Navbar } from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
+import { User, ShoppingBag, Flame, LayoutDashboard } from "lucide-react";
+import { AdminAuthContext } from "../context/AdminAuth";
 import Logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
 
 const Header = () => {
-  return (
-    <header className="shadow">
-      <div className="bg-dark d-flex justify-content-center p-2">
-        <span className="text-white">Your Fashion Partner</span>
-      </div>
-        <div className="container">
-          <Navbar expand="lg" className="">
-            <Navbar.Brand href="#">
-              <img src={Logo} alt="Logo" width="170px" />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="navbarScroll" />
-            <Navbar.Collapse id="navbarScroll">
-              <Nav
-                className="ms-auto my-2 my-lg-0"
-                style={{ maxHeight: "100px" }}
-                navbarScroll
-              >
-                <Nav.Link href="#action1">Home</Nav.Link>
-                <Nav.Link href="#action2">Link</Nav.Link>
-                <Nav.Link href="#action2">Men</Nav.Link>
-              </Nav>
-              <div className="nav-right d-flex">
-                <a href="" className="ms-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    fill="currentColor"
-                    className="bi bi-person"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"></path>
-                  </svg>
-                </a>
-                <Link to="/cart" className="ms-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="28"
-                    fill="currentColor"
-                    className="bi bi-bag"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"></path>
-                  </svg>
-                </Link>
-              </div>
-            </Navbar.Collapse>
-          </Navbar>
-        </div>
-      </header>
-  )
-}
+  const { user } = useContext(AdminAuthContext);
+  
+  // Real-time asynchronous countdown timer state
+  const [timeLeft, setTimeLeft] = useState({ hours: 3, minutes: 24, seconds: 45 });
 
-export default Header
+  useEffect(() => {
+    const clockEngine = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        clearInterval(clockEngine);
+        return { hours: 0, minutes: 0, seconds: 0 };
+      });
+    }, 1000);
+
+    return () => clearInterval(clockEngine);
+  }, []);
+
+  const formatSegment = (num) => String(num).padStart(2, "0");
+
+  return (
+    <header className="shadow-sm">
+      {/* ⚡ High-Density Interactive Announcement Offer Ribbon */}
+      <div className="offer-ticker-bar py-2">
+        <div className="container">
+          <div className="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <div className="d-flex align-items-center gap-2">
+              <span className="live-dot"></span>
+              <Flame size={14} className="text-warning" />
+              <span>
+                <strong>EXCLUSIVE PARTNER OFFER:</strong> Use code <strong>FASHION25</strong> for 25% off storewide!
+              </span>
+            </div>
+            <div className="d-flex align-items-center gap-2 small">
+              <span className="text-white-50">Offer Expires In:</span>
+              <span className="ticker-clock">
+                {formatSegment(timeLeft.hours)}h : {formatSegment(timeLeft.minutes)}m : {formatSegment(timeLeft.seconds)}s
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Core Application Navigation Bar */}
+      <div className="container">
+        <Navbar expand="lg" className="bg-white border-0">
+          {/* Brand Identity Logo Wrap */}
+          <Navbar.Brand as={Link} to="/" className="p-0">
+            <img src={Logo} alt="E-Commerce Platform Logo" width="170px" />
+          </Navbar.Brand>
+          
+          <Navbar.Toggle aria-controls="navbarScroll" className="border-0 shadow-none" />
+          
+          <Navbar.Collapse id="navbarScroll">
+            {/* Middle Aligned Navigation Links Router Integrations */}
+            <Nav className="ms-auto my-2 my-lg-0 gap-1" navbarScroll>
+              <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
+              <Nav.Link as={NavLink} to="/shop">Shop</Nav.Link>
+              <Nav.Link as={NavLink} to="/shop?gender=men">Men</Nav.Link>
+              <Nav.Link as={NavLink} to="/shop?gender=women">Women</Nav.Link>
+            </Nav>
+
+            {/* Right-Aligned Navigation Console Tray Actions */}
+            <div className="nav-right d-flex align-items-center gap-2 ms-lg-3 mt-3 mt-lg-0">
+              
+              {/* Conditional Rendering Layer mapping Auth State capsules */}
+              {user ? (
+                <Link 
+                  to="/admin/dashboard" 
+                  className="btn btn-outline-dark btn-sm d-flex align-items-center gap-1.5 px-3 py-1.5 rounded-pill fw-semibold me-2"
+                >
+                  <LayoutDashboard size={16} />
+                  <span>Admin Hub</span>
+                </Link>
+              ) : (
+                <Link to="/admin/login" className="header-icon-trigger" aria-label="Account Login Profile">
+                  <User size={22} />
+                </Link>
+              )}
+
+              {/* Shopping Bag Trigger Link */}
+              <Link to="/cart" className="header-icon-trigger" aria-label="View Shopping Cart Layout">
+                <ShoppingBag size={22} />
+              </Link>
+
+            </div>
+          </Navbar.Collapse>
+        </Navbar>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

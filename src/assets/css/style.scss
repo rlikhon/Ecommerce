@@ -9,11 +9,20 @@ $primary-black: #061123;
 $secondary-color: #0284ff;
 $tertiary-color: #2f4858;
 
+// Ensure the root document context forces full window height usage
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: $primary-font;
   font-size: 1em;
   color: $primary-black;
   font-weight: 500;
+  
+  // ✅ THE FIX: Create a continuous flex stack down the rendering tree
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
@@ -102,71 +111,172 @@ ul {
   }
 }
 
+// Ensure your primary page layout shell automatically grows to push the footer down
+main, #root, .layout-wrapper { 
+  flex: 1 0 auto;
+}
+
+// Header & Navigation Custom Modifications
 header {
-  .navbar-expand-lg {
-    .navbar-nav {
-      .nav-link {
-        font-size: 1.2em;
-        font-weight: 500;
-        color: $primary-black;
-        padding: 10px 15px;
-        &:hover {
-          color: $primary-color;
-        }
-      }
+  background-color: $primary-white;
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+
+  .navbar {
+    padding: 12px 0;
+  }
+
+  // ✅ Link Polish: Restructure React-Bootstrap nav links to use your variables
+  .nav-link {
+    font-size: 1.05em !important;
+    font-weight: 500 !important;
+    color: rgba($primary-black, 0.8) !important;
+    padding: 8px 16px !important;
+    transition: color 0.2s ease-in-out;
+
+    &:hover, &.active {
+      color: $primary-color !important;
+    }
+  }
+
+  // Header Action Triggers
+  .header-icon-trigger {
+    color: $primary-black;
+    transition: all 0.2s ease;
+    padding: 8px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.08);
+      color: $primary-color;
     }
   }
 }
 
+
+// ✅ Dynamic Ticker Ribbon Spacing Strip
+.offer-ticker-bar {
+  background: linear-gradient(135deg, $primary-black 0%, lighten($primary-black, 8%) 100%);
+  color: $primary-white;
+  font-size: 0.88em;
+  font-weight: 500;
+  border-bottom: 2px solid $primary-color;
+
+  .ticker-clock {
+    background-color: rgba($primary-white, 0.12);
+    border: 1px solid rgba($primary-white, 0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: 600;
+    color: $primary-color;
+    letter-spacing: 0.5px;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    display: inline-block;
+    animation: beaconPulse 1.5s infinite ease-in-out;
+  }
+}
+
+@keyframes beaconPulse {
+  0% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.4; transform: scale(0.9); }
+}
+
 footer {
+  flex-shrink: 0; // Prevent the footer block from buckling on high-density view grids
   background-color: $tertiary-color;
+  margin-top: 5rem; // ✅ THE FIX: Guarantees a strict, proportional spacing barrier on ALL pages
+  border-top: 4px solid $primary-color; // Adds a subtle anchor line tracking your main color scheme
+
   h2 {
     font-size: 1.2em;
     color: $primary-white;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 8px;
+
+    // Premium visual touch: accent line indicator beneath matching headings
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 30px;
+      height: 2px;
+      background-color: $primary-color;
+    }
   }
+
   ul {
     li {
+      margin-bottom: 10px;
       a {
-        font-size: 1em;
-        color: $primary-white;
+        font-size: 0.95em;
+        color: rgba($primary-white, 0.75);
         text-transform: capitalize;
-      }
-      &:hover {
-        a {
-          color: #0077b5; /* LinkedIn Blue */
-          transition: 0.3s;
+        transition: all 0.2s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        svg {
+          color: rgba($primary-white, 0.5);
+          transition: color 0.2s ease;
+        }
+
+        &:hover {
+          color: $primary-color;
+          transform: translateX(3px);
+
+          svg {
+            color: $primary-color;
+          }
         }
       }
     }
   }
+
   .spotlight {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    ul {
-      li {
-        a {
-          color: $primary-white;
-          &:hover {
-            color: $primary-color;
-            transition: 0.3s;
-          }
-          p {
-            color: $primary-white;
-            &:hover {
-              color: $primary-color;
-              transition: 0.3s;
-            }
-          }
-          svg {
-            color: $primary-white;
-            &:hover {
-              color: $primary-color;
-              transition: 0.3s;
-            }
-          }
-        }
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba($primary-black, 0.15); // Adds contrast split to the base row
+    
+    .spotlight-card {
+      padding: 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+      
+      svg {
+        color: $primary-color; // Maps feature callout highlights back to your theme
+        margin-bottom: 12px;
+      }
+      
+      h3 {
+        font-size: 1.1em;
+        margin-bottom: 4px;
+      }
+      
+      p {
+        color: rgba($primary-white, 0.6) !important;
       }
     }
+  }
+  
+  .copyright-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: rgba($primary-black, 0.25);
+    font-size: 0.85em;
+    color: rgba($primary-white, 0.4);
   }
 }
 
