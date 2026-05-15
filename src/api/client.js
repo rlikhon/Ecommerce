@@ -16,8 +16,12 @@ client.interceptors.response.use(
   (res) => res,
   (err) => {
     const status = err.response?.status;
-    const msg = err.response?.data?.message || "Something went wrong";
-    //console.log(msg);
+    const msg = err.response?.data?.message || err.message || "Something went wrong";
+
+    if (!err.response) {
+      toast.error("Network Error: Cannot connect to API. Ensure your backend is running and supports HTTPS if the frontend is HTTPS.");
+      return Promise.reject(err);
+    }
 
     if (status === 401) {
       localStorage.removeItem("token");
@@ -27,10 +31,10 @@ client.interceptors.response.use(
     } else if (status === 403) {
       toast.error("Access denied.");
     } else {
-      toast.error(msg); // Handles 400, 422, 500, etc.
+      toast.error(msg);
     }
 
-    return Promise.reject(err); // Essential to let the component know it failed
+    return Promise.reject(err);
   },
 );
 
