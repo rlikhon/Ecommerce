@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/api/admin",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000/api",
   headers: { "Content-Type": "application/json" },
 });
 
@@ -16,10 +16,13 @@ client.interceptors.response.use(
   (res) => res,
   (err) => {
     const status = err.response?.status;
-    const msg = err.response?.data?.message || err.message || "Something went wrong";
+    const msg =
+      err.response?.data?.message || err.message || "Something went wrong";
 
     if (!err.response) {
-      toast.error("Network Error: Cannot connect to API. Ensure your backend is running and supports HTTPS if the frontend is HTTPS.");
+      toast.error(
+        "Network Error: Cannot connect to API. Ensure your backend is running and supports HTTPS if the frontend is HTTPS.",
+      );
       return Promise.reject(err);
     }
 
