@@ -8,6 +8,7 @@ import { useProducts } from "../hooks/useProducts";
 import { useSearchParams } from "react-router-dom"; // ✅ FIX: Bring this hook into scope
 
 const Shop = () => {
+  const DefaultProductImg = "https://placeholder.com";
   // ✅ FIX: Replace standard useState hooks with URL parameter engine synchronization
   const [searchParams, setSearchParams] = useSearchParams();
 

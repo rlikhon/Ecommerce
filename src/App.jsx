@@ -28,6 +28,11 @@ import { default as ShowProducts } from "./components/admin/product/Show";
 import { default as CreateProducts } from "./components/admin/product/Create";
 import { default as EditProducts } from "./components/admin/product/Edit";
 
+// Profile Views
+import ChangePassword from "./components/admin/ChangePassword";
+import Profile from "./components/admin/Profile";
+
+
 function App() {
   return (
     <AdminAuthProvider>
@@ -61,6 +66,10 @@ function App() {
             <Route path="/admin/products" element={<ShowProducts />} />
             <Route path="/admin/products/create" element={<CreateProducts />} />
             <Route path="/admin/products/edit/:id" element={<EditProducts />} />
+
+            {/* Profile Sub-Resource Group */}
+            <Route path="/admin/profile" element={<Profile />} />
+            <Route path="/admin/change-password" element={<ChangePassword />} />
           </Route>
 
         </Routes>

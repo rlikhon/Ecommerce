@@ -31,6 +31,11 @@ const Sidebar = () => {
     { path: "/admin/users", label: "Users", icon: Users },
     { path: "/admin/shipping", label: "Shipping", icon: Truck },
     {
+      path: "/admin/profile",
+      label: "Profile",
+      icon: LayoutDashboard,
+    },
+    {
       path: "/admin/change-password",
       label: "Change Password",
       icon: KeyRound,
@@ -66,14 +71,14 @@ const Sidebar = () => {
           })}
 
           <li className="border-top mt-2 pt-2">
-            <a
-              href="#"
+            <Link
+              to="/admin/logout"
               onClick={handleLogout}
               className="sidebar-link text-danger logout-link"
             >
               <LogOut size={18} className="sidebar-icon" />
               <span>Logout</span>
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
