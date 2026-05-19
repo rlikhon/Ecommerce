@@ -438,3 +438,259 @@ footer {
     }
   }
 }
+
+
+
+// wishlist-btn Strictly-namespaced premium variables
+$wishlist-btn-color-gray-dark: #374151;
+$wishlist-btn-color-gray-border: #d1d5db;
+$wishlist-btn-color-heart-red: #ef4444;
+$wishlist-btn-color-heart-bg-active: #fef2f2;
+$wishlist-btn-color-heart-border-active: #fca5a5;
+$wishlist-btn-color-focus-outline: #2563eb;
+$wishlist-btn-color-disabled-bg: #f3f4f6;
+
+.wishlist-btn {
+  // Layout Engine
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-left: 20px;
+  
+  // Sizing & Box Model
+  padding: 10px 22px;
+  background-color: transparent;
+  color: $wishlist-btn-color-gray-dark;
+  border: 1px solid $wishlist-btn-color-gray-border;
+  border-radius: 8px;
+  
+  // Typography
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  
+  // Interactivity Setup
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  
+  // Performance-optimized GPU Transitions
+  transition: 
+    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &__icon {
+    color: $wishlist-btn-color-gray-dark;
+    fill: transparent;
+    transform-origin: center;
+    transition: 
+      color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      fill 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  &__text {
+    position: relative;
+  }
+
+  // Premium Desaturated Interactive States
+  &:hover:not(:disabled) {
+    background-color: rgba($wishlist-btn-color-gray-dark, 0.04);
+    border-color: darken($wishlist-btn-color-gray-border, 10%);
+    
+    .wishlist-btn__icon {
+      transform: scale(1.1);
+    }
+  }
+
+  // WCAG 2.2 Compliant Keyboard Focus Rings
+  &:focus-visible {
+    outline: 2px solid $wishlist-btn-color-focus-outline;
+    outline-offset: 2px;
+  }
+
+  // Tactile Spring Physics Compression on click
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  // Highly Refined "Saved" Active State Modifiers
+  &.is-active {
+    color: $wishlist-btn-color-heart-red;
+    border-color: $wishlist-btn-color-heart-border-active;
+    background-color: $wishlist-btn-color-heart-bg-active;
+
+    .wishlist-btn__icon {
+      color: $wishlist-btn-color-heart-red;
+      fill: $wishlist-btn-color-heart-red;
+      animation: heartBeatPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.5) forwards;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: linear-gradient(0deg, rgba($wishlist-btn-color-heart-red, 0.04), rgba($wishlist-btn-color-heart-red, 0.04)), $wishlist-btn-color-heart-bg-active;
+      border-color: darken($wishlist-btn-color-heart-border-active, 12%);
+    }
+  }
+
+  // Network Pending state handling
+  &.is-loading,
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $wishlist-btn-color-disabled-bg;
+    border-color: $wishlist-btn-color-gray-border;
+    color: lighten($wishlist-btn-color-gray-dark, 25%);
+    pointer-events: none;
+
+    .wishlist-btn__icon {
+      opacity: 0.4;
+      transform: scale(0.9);
+    }
+  }
+}
+
+// Micro-interaction keyframes for the organic heartbeat bounce pop
+@keyframes heartBeatPop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.75);
+  }
+  60% {
+    transform: scale(1.35);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+// cart-btn Variables
+// Strictly-namespaced premium variables matching wishlist button tokens
+$add-to-cart-btn-color-primary-blue: #2563eb;
+$add-to-cart-btn-color-primary-hover: #1d4ed8;
+$add-to-cart-btn-color-success-green: #10b981;
+$add-to-cart-btn-color-text-white: #ffffff;
+$add-to-cart-btn-color-focus-outline: #2563eb;
+$add-to-cart-btn-color-disabled-bg: #f3f4f6;
+$add-to-cart-btn-color-disabled-text: #9ca3af;
+
+.cart-btn {
+  // Layout Engine
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  
+  // Sizing & Box Model
+  padding: 10px 22px;
+  background-color: $add-to-cart-btn-color-primary-blue;
+  color: $add-to-cart-btn-color-text-white;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  
+  // Typography
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  
+  // Interactivity Setup
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  
+  // Performance-optimized GPU Transitions
+  transition: 
+    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &__icon {
+    flex-shrink: 0;
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  &__text {
+    position: relative;
+  }
+
+  // Interactive Hover States
+  &:hover:not(:disabled) {
+    background-color: $add-to-cart-btn-color-primary-hover;
+    
+    .cart-btn__icon {
+      transform: translateY(-1px) scale(1.05);
+    }
+  }
+
+  // WCAG 2.2 Compliant Keyboard Focus Rings
+  &:focus-visible {
+    outline: 2px solid $add-to-cart-btn-color-focus-outline;
+    outline-offset: 2px;
+  }
+
+  // Tactile Compression on Click
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  // Success Confirmation Overrides
+  &.is-success {
+    background-color: $add-to-cart-btn-color-success-green;
+    cursor: default;
+    
+    .cart-btn__text,
+    .cart-btn__icon {
+      animation: cartPopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.4) forwards;
+    }
+  }
+
+  // Network State & Global Disabling Locks
+  &.is-loading,
+  &:disabled:not(.is-success) {
+    cursor: not-allowed;
+    background-color: $add-to-cart-btn-color-disabled-bg;
+    border-color: $add-to-cart-btn-color-disabled-bg;
+    color: $add-to-cart-btn-color-disabled-text;
+    pointer-events: none;
+
+    .cart-btn__icon {
+      opacity: 0.5;
+    }
+  }
+}
+
+// Micro-interaction keyframes for high-performance state swapping
+@keyframes cartPopIn {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

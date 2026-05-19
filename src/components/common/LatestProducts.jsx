@@ -59,13 +59,15 @@ const LatestProducts = () => {
                 <div key={`latest-prod-${product.id}`} className="col-md-3 col-sm-6 col-6">
                   <div className="product card border-0 h-100 shadow-sm rounded">
                     <div className="card-img position-relative overflow-hidden rounded-top">
-                      <img 
-                        src={displayImage} 
-                        alt={product.title} 
-                        className="w-100 object-fit-cover"
-                        style={{ height: "280px" }}
-                        onError={(e) => { e.target.src = DefaultProductImg; }}
-                      />
+                      <Link to={`/product/${product.id}`} className="text-dark fw-semibold text-decoration-none h6 d-block text-truncate">
+                        <img 
+                          src={displayImage} 
+                          alt={product.title} 
+                          className="w-100 object-fit-cover"
+                          style={{ height: "280px" }}
+                          onError={(e) => { e.target.src = DefaultProductImg; }}
+                        />
+                      </Link>
                     </div>
                     <div className="card-body pt-3 px-3 pb-3 d-flex flex-column justify-content-between">
                       <div className="product-title mb-2">

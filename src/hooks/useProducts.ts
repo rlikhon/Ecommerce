@@ -5,10 +5,6 @@ export const useProducts = (categoryId: string | null, brandId: string | null) =
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   
-
-  console.log('categories', categoryId)
-  console.log('brands', brandId)
-
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {

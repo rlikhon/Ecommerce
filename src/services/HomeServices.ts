@@ -27,3 +27,6 @@ export const filterProductsService = (categoryId: string | null, brandId: string
 
   return client.get(url);
 };
+
+export const getProductDetailsService = (productId: number) =>
+  client.get(`/get-product-details/${productId}`);

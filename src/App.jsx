@@ -41,7 +41,7 @@ function App() {
           {/* Public Consumer Frontend Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/product" element={<Products />} />
+          <Route path="/product/:id" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
 

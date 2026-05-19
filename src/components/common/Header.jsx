@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Nav, Navbar } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Nav, Navbar, Spinner } from "react-bootstrap";
+// ✅ THE FIX: Standardized on semantic Link for structural isolation control
+import { Link, useLocation } from "react-router-dom";
 import { User, ShoppingBag, Flame, LayoutDashboard } from "lucide-react";
 import { AdminAuthContext } from "../context/AdminAuth";
+import { useCategories } from "../../hooks/useCategories";
 import Logo from "../../assets/images/logo.png";
 
 const Header = () => {
   const { user } = useContext(AdminAuthContext);
+  const location = useLocation(); 
   
   // Real-time asynchronous countdown timer state
   const [timeLeft, setTimeLeft] = useState({ hours: 3, minutes: 24, seconds: 45 });
@@ -26,6 +29,12 @@ const Header = () => {
   }, []);
 
   const formatSegment = (num) => String(num).padStart(2, "0");
+
+  const { categories, categoryLoading } = useCategories();
+
+  // Create an explicit URL parameter lookup query reference context block
+  const currentQueryParams = new URLSearchParams(location.search);
+  const activeCategoryQuery = currentQueryParams.get("categories");
 
   return (
     <header className="shadow-sm">
@@ -53,7 +62,6 @@ const Header = () => {
       {/* Main Core Application Navigation Bar */}
       <div className="container">
         <Navbar expand="lg" className="bg-white border-0">
-          {/* Brand Identity Logo Wrap */}
           <Navbar.Brand as={Link} to="/" className="p-0">
             <img src={Logo} alt="E-Commerce Platform Logo" width="170px" />
           </Navbar.Brand>
@@ -61,18 +69,52 @@ const Header = () => {
           <Navbar.Toggle aria-controls="navbarScroll" className="border-0 shadow-none" />
           
           <Navbar.Collapse id="navbarScroll">
-            {/* Middle Aligned Navigation Links Router Integrations */}
-            <Nav className="ms-auto my-2 my-lg-0 gap-1" navbarScroll>
-              <Nav.Link as={NavLink} to="/" end>Home</Nav.Link>
-              <Nav.Link as={NavLink} to="/shop">Shop</Nav.Link>
-              <Nav.Link as={NavLink} to="/shop?gender=men">Men</Nav.Link>
-              <Nav.Link as={NavLink} to="/shop?gender=women">Women</Nav.Link>
-            </Nav>
+            {/* ✅ THE FIX: Standardized nav wrapper using structural links to stop dual-selection leaks */}
+            <div className="navbar-nav ms-auto my-2 my-lg-0 gap-1">
+              
+              {/* Home Link */}
+              <Link 
+                key="home" 
+                to="/" 
+                className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
+              >
+                Home
+              </Link>
+              
+              {/* Main Shop Link: STRICT evaluation constraint rule */}
+              <Link 
+                key="shop" 
+                to="/shop"
+                className={`nav-link ${location.pathname === "/shop" && !activeCategoryQuery ? "active" : ""}`}
+              >
+                Shop
+              </Link>
+
+              {/* Dynamic Category List Links */}
+              {categoryLoading ? (
+                <div className="py-2 text-muted small d-flex align-items-center">
+                  <Spinner animation="border" size="sm" className="me-2" />Loading...
+                </div>
+              ) : (
+                categories?.map((category) => {
+                  // Strict category ID tracking check
+                  const isCurrentCategoryActive = location.pathname === "/shop" && activeCategoryQuery === String(category.id);
+
+                  return (
+                    <Link 
+                      key={`shop-cat-${category.id}`} 
+                      to={`/shop?categories=${category.id}`}
+                      className={`nav-link ${isCurrentCategoryActive ? "active" : ""}`}
+                    >
+                      {category.name}
+                    </Link>
+                  );
+                })
+              )}
+            </div>
 
             {/* Right-Aligned Navigation Console Tray Actions */}
             <div className="nav-right d-flex align-items-center gap-2 ms-lg-3 mt-3 mt-lg-0">
-              
-              {/* Conditional Rendering Layer mapping Auth State capsules */}
               {user ? (
                 <Link 
                   to="/admin/dashboard" 
@@ -87,11 +129,9 @@ const Header = () => {
                 </Link>
               )}
 
-              {/* Shopping Bag Trigger Link */}
               <Link to="/cart" className="header-icon-trigger" aria-label="View Shopping Cart Layout">
                 <ShoppingBag size={22} />
               </Link>
-
             </div>
           </Navbar.Collapse>
         </Navbar>
