@@ -696,3 +696,53 @@ $add-to-cart-btn-color-disabled-text: #9ca3af;
     opacity: 1;
   }
 }
+
+
+// Premium Cart Quantity Selection Input Groups
+.cart-qty-control-wrapper {
+  max-width: 120px;
+  box-shadow: 0 2px 6px rgba($primary-black, 0.04);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba($primary-black, 0.12);
+  background-color: $primary-white;
+
+  .btn-qty-action {
+    background-color: rgba($primary-black, 0.02);
+    color: rgba($primary-black, 0.7);
+    border: none;
+    width: 34px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    padding: 0;
+
+    &:hover:not(:disabled) {
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+    }
+
+    &:disabled {
+      color: rgba($primary-black, 0.25);
+      cursor: not-allowed;
+    }
+  }
+
+  .qty-display-input {
+    border: none;
+    background-color: transparent;
+    font-weight: 600;
+    color: $primary-black;
+    font-size: 0.95em;
+    padding: 0;
+    
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    -moz-appearance: textfield;
+  }
+}
