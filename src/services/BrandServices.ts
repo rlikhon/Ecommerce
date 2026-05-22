@@ -1,7 +1,7 @@
 import axios from "axios";
 import client from "../api/client";
 
-export const showBrandService = () => client.get(`/admin/brands`);
+export const showBrandService = () => client.get(`/get-brands`);
 
 export const showEditBrandService = (brandId: number) =>
   client.get(`/admin/brands/${brandId}`);

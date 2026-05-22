@@ -1,7 +1,7 @@
 import axios from "axios";
 import client from "../api/client";
 
-export const showCategoryService = () =>  client.get(`/admin/categories`);
+export const showCategoryService = () =>  client.get(`/get-categories`);
 
 export const showEditCategoryService = (categoryId: number) =>  client.get(`/admin/categories/${categoryId}`);
 

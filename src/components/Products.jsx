@@ -1,8 +1,16 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  useContext,
+} from "react";
 import Layout from "./common/Layout";
 import { Link, useParams } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import { Spinner, Tab, Tabs } from "react-bootstrap";
+
+import { CartContext } from "./context/Cart";
 import { getProductDetailsService } from "../services/HomeServices";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,7 +19,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
+import { toast } from "react-toastify";
 import DefaultProductImg from "../assets/images/Mens/five.jpg";
 
 import WishListButton from "./buttons/WishListButton";
@@ -22,8 +30,11 @@ const Products = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [rating] = useState(4.5);
   const [productImages, setProductImages] = useState([]);
+  const [sizeSelected, setSizeSelected] = useState(null);
+  const [productSizes, setProductSizes] = useState(null);
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
   // 1. Setup refs if you ever need direct DOM control (like moving focus)
   const addToCartRef = useRef(null);
@@ -49,6 +60,7 @@ const Products = () => {
           });
         }
         setProductImages(imagesList);
+        setProductSizes(productsData.sizes);
       }
     } catch (error) {
       console.error("Failed to fetch product details:", error);
@@ -63,6 +75,39 @@ const Products = () => {
     }, 0);
     return () => clearTimeout(token);
   }, [id, fetchProductDetails]);
+
+  const handleAddToCart = () => {
+    if (productSizes && productSizes?.length > 0) {
+      if (sizeSelected == null) {
+        toast.error("Please select size");
+        return;
+      } else {
+        addToCart(product, sizeSelected);
+        // Add success toast notification
+        toast.success("Product added to cart successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    } else {
+      addToCart(product, null);
+      // Add success toast notification
+      toast.success("Product added to cart successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -234,7 +279,8 @@ const Products = () => {
                   {product.sizes.map((size) => (
                     <button
                       key={`size-btn-${size.id}`}
-                      className="btn btn-size active"
+                      className={`btn btn-size ${sizeSelected === size.id ? "active" : ""}`}
+                      onClick={() => setSizeSelected(size.id)}
                     >
                       {size.name}
                     </button>
@@ -266,6 +312,9 @@ const Products = () => {
               <button
                 className="btn btn-primary btn-lg rounded px-5 py-2.5 fw-semibold shadow-sm"
                 disabled={product.qty <= 0}
+                onClick={() => {
+                  handleAddToCart();
+                }}
               >
                 {product.qty > 0 ? "Add to Shopping Cart" : "Out of Stock"}
               </button>

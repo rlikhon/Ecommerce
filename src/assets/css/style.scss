@@ -76,15 +76,17 @@ ul {
 
 .btn {
   &.btn-size {
-    background-color: rgba($primary-black, 0.03);
-    border-color: rgba($primary-black, 0.05);
+    background-color: rgba($secondary-color, 0.03);
+    border-color: rgba($secondary-color, 0.05);
     padding: 7px 15px;
     &.active {
-      border-color: rgba($primary-black, 0.2);
+      border-color: rgba($secondary-color, 0.2);
+      background-color: rgba(#ffc107, 0.03);
     }
     &:hover {
       border-color: rgba($primary-black, 0.2);
-      color: $primary-black;
+      background-color: rgba($secondary-color, 0.03);
+      color: #0284ff;
     }
   }
   &.btn-primary {

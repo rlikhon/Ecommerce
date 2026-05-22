@@ -1,5 +1,5 @@
 import axios from "axios";
-import client from "../api/client";
+import client from "../api/publicClient";
 
 export const latestProductsService = () => client.get(`/get-latest-products`);
 
