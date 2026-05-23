@@ -32,6 +32,9 @@ import { default as EditProducts } from "./components/admin/product/Edit";
 import ChangePassword from "./components/admin/ChangePassword";
 import Profile from "./components/admin/Profile";
 
+// Account Views
+import Register from "./components/Register";
+
 
 function App() {
   return (
@@ -44,6 +47,7 @@ function App() {
           <Route path="/product/:id" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/account/register" element={<Register />} />
 
           {/* Admin Authentication Entryway */}
           <Route path="/admin/login" element={<Login />} />
