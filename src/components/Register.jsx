@@ -1,8 +1,9 @@
 import React from "react";
-import Layout from "./common/Layout";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
+import Layout from "./common/Layout";
 
 const Register = () => {
   const {
@@ -16,7 +17,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     try {
       const res = await fetch("http://localhost:8000/api/auth/register", {
-        method: "POST",
+        method: "POST", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
@@ -106,9 +107,15 @@ const Register = () => {
                   {isSubmitting ? (
                     <Spinner animation="border" size="sm" />
                   ) : (
-                    "Login"
+                    "Register"
                   )}
                 </button>
+                <div className="mt-3 text-center">
+                  <span className="text-muted">Already have an account?</span>
+                  <Link to="/login" className="text-decoration-none fw-semibold">
+                    &nbsp;Login
+                  </Link>
+                </div>
               </form>
             </div>
           </div>
