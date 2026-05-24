@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Layout from "./common/Layout";
+import { AccountAuthContext } from "./context/AccountAuth";
 
-const Register = () => {
+const Login = () => {
+  // ✅ FIXED: Grabs the exact login invocation tracking key from your provider context file
+  const { login } = useContext(AccountAuthContext);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -13,11 +18,9 @@ const Register = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const navigate = useNavigate();
-
   const onSubmit = async (data) => {
     try {
-      const res = await fetch("http://localhost:8000/api/register", {
+      const res = await fetch("http://localhost:8000/api/login", {
         method: "POST", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -26,15 +29,32 @@ const Register = () => {
       const result = await res.json();
 
       if (res.ok) {
-        toast.success(result.message);
-        navigate("/account/login");
+        toast.success(result.message || "Logged in successfully!");
+        const userInfo = {
+            token: result.token,
+            id: result.user.id,
+            name: result.user.name, 
+            email: result.user.email,
+            role: result.user.role,
+        };
+
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        login(userInfo);
+        
+        // ✅ ROUTING RESOLUTION: Diverts user to a protected path registered in your system architecture.
+        // Change this route identifier to your target customer dashboard if it gets declared inside App.jsx
+        navigate("/account/profile");
       } else {
         const formErrors = result.errors;
-        Object.keys(formErrors).forEach((field) => {
-        setError(field, {
-          message: formErrors[field][0],
-        });
-      });
+        if (formErrors) {
+          Object.keys(formErrors).forEach((field) => {
+            setError(field, {
+              message: formErrors[field][0],
+            });
+          });
+        } else {
+          toast.error(result.message || "Invalid account login inputs.");
+        }
       }
     } catch (err) {
       console.error(err);
@@ -49,27 +69,10 @@ const Register = () => {
           <div className="col-md-5 col-lg-4">
             <div className="login bg-white shadow-sm p-5 rounded-4">
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                <h3 className="mb-4 text-center fw-bold">Account Register</h3>
+                <h3 className="mb-4 text-center fw-bold">Account Login</h3>
 
                 <div className="mb-3">
-                  <label className="form-label">Name</label>
-                  <input
-                    {...register("name", {
-                      required: "Name is required",
-                    })}
-                    type="text"
-                    className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                    placeholder="Enter your name"
-                  />
-                  {errors.name && (
-                    <div className="invalid-feedback">
-                      {errors.name.message}
-                    </div>
-                  )}
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
+                  <label className="form-label">Email Address</label>
                   <input
                     {...register("email", {
                       required: "Email is required",
@@ -113,13 +116,13 @@ const Register = () => {
                   {isSubmitting ? (
                     <Spinner animation="border" size="sm" />
                   ) : (
-                    "Register"
+                    "Login"
                   )}
                 </button>
                 <div className="mt-3 text-center">
-                  <span className="text-muted">Already have an account?</span>
-                  <Link to="/login" className="text-decoration-none fw-semibold">
-                    &nbsp;Login
+                  <span className="text-muted">Don't have an account?</span>
+                  <Link to="/account/register" className="text-decoration-none fw-semibold">
+                    &nbsp;Register
                   </Link>
                 </div>
               </form>
@@ -131,4 +134,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

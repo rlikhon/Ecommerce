@@ -10,7 +10,8 @@ $secondary-color: #0284ff;
 $tertiary-color: #2f4858;
 
 // Ensure the root document context forces full window height usage
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -19,7 +20,7 @@ body {
   font-size: 1em;
   color: $primary-black;
   font-weight: 500;
-  
+
   // ✅ THE FIX: Create a continuous flex stack down the rendering tree
   display: flex;
   flex-direction: column;
@@ -114,7 +115,9 @@ ul {
 }
 
 // Ensure your primary page layout shell automatically grows to push the footer down
-main, #root, .layout-wrapper { 
+main,
+#root,
+.layout-wrapper {
   flex: 1 0 auto;
 }
 
@@ -137,7 +140,8 @@ header {
     padding: 8px 16px !important;
     transition: color 0.2s ease-in-out;
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
       color: $primary-color !important;
     }
   }
@@ -159,10 +163,13 @@ header {
   }
 }
 
-
 // ✅ Dynamic Ticker Ribbon Spacing Strip
 .offer-ticker-bar {
-  background: linear-gradient(135deg, $primary-black 0%, lighten($primary-black, 8%) 100%);
+  background: linear-gradient(
+    135deg,
+    $primary-black 0%,
+    lighten($primary-black, 8%) 100%
+  );
   color: $primary-white;
   font-size: 0.88em;
   font-weight: 500;
@@ -190,9 +197,18 @@ header {
 }
 
 @keyframes beaconPulse {
-  0% { opacity: 0.4; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0.4; transform: scale(0.9); }
+  0% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
 }
 
 footer {
@@ -210,7 +226,7 @@ footer {
 
     // Premium visual touch: accent line indicator beneath matching headings
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       bottom: 0;
@@ -251,29 +267,32 @@ footer {
 
   .spotlight {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    background-color: rgba($primary-black, 0.15); // Adds contrast split to the base row
-    
+    background-color: rgba(
+      $primary-black,
+      0.15
+    ); // Adds contrast split to the base row
+
     .spotlight-card {
       padding: 1.5rem;
       border-radius: 8px;
       transition: transform 0.2s ease;
-      
+
       svg {
         color: $primary-color; // Maps feature callout highlights back to your theme
         margin-bottom: 12px;
       }
-      
+
       h3 {
         font-size: 1.1em;
         margin-bottom: 4px;
       }
-      
+
       p {
         color: rgba($primary-white, 0.6) !important;
       }
     }
   }
-  
+
   .copyright-bar {
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     background-color: rgba($primary-black, 0.25);
@@ -441,8 +460,6 @@ footer {
   }
 }
 
-
-
 // wishlist-btn Strictly-namespaced premium variables
 $wishlist-btn-color-gray-dark: #374151;
 $wishlist-btn-color-gray-border: #d1d5db;
@@ -459,30 +476,30 @@ $wishlist-btn-color-disabled-bg: #f3f4f6;
   justify-content: center;
   gap: 10px;
   margin-left: 20px;
-  
+
   // Sizing & Box Model
   padding: 10px 22px;
   background-color: transparent;
   color: $wishlist-btn-color-gray-dark;
   border: 1px solid $wishlist-btn-color-gray-border;
   border-radius: 8px;
-  
+
   // Typography
   font-family: inherit;
   font-weight: 600;
   font-size: 14px;
   line-height: 1.25;
   letter-spacing: -0.01em;
-  
+
   // Interactivity Setup
   cursor: pointer;
   user-select: none;
   outline: none;
   position: relative;
   overflow: hidden;
-  
+
   // Performance-optimized GPU Transitions
-  transition: 
+  transition:
     background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
@@ -499,7 +516,7 @@ $wishlist-btn-color-disabled-bg: #f3f4f6;
     color: $wishlist-btn-color-gray-dark;
     fill: transparent;
     transform-origin: center;
-    transition: 
+    transition:
       color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
       fill 0.25s cubic-bezier(0.4, 0, 0.2, 1),
       transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -513,7 +530,7 @@ $wishlist-btn-color-disabled-bg: #f3f4f6;
   &:hover:not(:disabled) {
     background-color: rgba($wishlist-btn-color-gray-dark, 0.04);
     border-color: darken($wishlist-btn-color-gray-border, 10%);
-    
+
     .wishlist-btn__icon {
       transform: scale(1.1);
     }
@@ -539,11 +556,18 @@ $wishlist-btn-color-disabled-bg: #f3f4f6;
     .wishlist-btn__icon {
       color: $wishlist-btn-color-heart-red;
       fill: $wishlist-btn-color-heart-red;
-      animation: heartBeatPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.5) forwards;
+      animation: heartBeatPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.5)
+        forwards;
     }
 
     &:hover:not(:disabled) {
-      background-color: linear-gradient(0deg, rgba($wishlist-btn-color-heart-red, 0.04), rgba($wishlist-btn-color-heart-red, 0.04)), $wishlist-btn-color-heart-bg-active;
+      background-color:
+        linear-gradient(
+          0deg,
+          rgba($wishlist-btn-color-heart-red, 0.04),
+          rgba($wishlist-btn-color-heart-red, 0.04)
+        ),
+        $wishlist-btn-color-heart-bg-active;
       border-color: darken($wishlist-btn-color-heart-border-active, 12%);
     }
   }
@@ -583,7 +607,6 @@ $wishlist-btn-color-disabled-bg: #f3f4f6;
   }
 }
 
-
 // cart-btn Variables
 // Strictly-namespaced premium variables matching wishlist button tokens
 $add-to-cart-btn-color-primary-blue: #2563eb;
@@ -600,30 +623,30 @@ $add-to-cart-btn-color-disabled-text: #9ca3af;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  
+
   // Sizing & Box Model
   padding: 10px 22px;
   background-color: $add-to-cart-btn-color-primary-blue;
   color: $add-to-cart-btn-color-text-white;
   border: 1px solid transparent;
   border-radius: 8px;
-  
+
   // Typography
   font-family: inherit;
   font-weight: 600;
   font-size: 14px;
   line-height: 1.25;
   letter-spacing: -0.01em;
-  
+
   // Interactivity Setup
   cursor: pointer;
   user-select: none;
   outline: none;
   position: relative;
   overflow: hidden;
-  
+
   // Performance-optimized GPU Transitions
-  transition: 
+  transition:
     background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
@@ -642,7 +665,7 @@ $add-to-cart-btn-color-disabled-text: #9ca3af;
   // Interactive Hover States
   &:hover:not(:disabled) {
     background-color: $add-to-cart-btn-color-primary-hover;
-    
+
     .cart-btn__icon {
       transform: translateY(-1px) scale(1.05);
     }
@@ -663,7 +686,7 @@ $add-to-cart-btn-color-disabled-text: #9ca3af;
   &.is-success {
     background-color: $add-to-cart-btn-color-success-green;
     cursor: default;
-    
+
     .cart-btn__text,
     .cart-btn__icon {
       animation: cartPopIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.4) forwards;
@@ -696,7 +719,6 @@ $add-to-cart-btn-color-disabled-text: #9ca3af;
     opacity: 1;
   }
 }
-
 
 // Premium Cart Quantity Selection Input Groups
 .cart-qty-control-wrapper {
@@ -737,12 +759,226 @@ $add-to-cart-btn-color-disabled-text: #9ca3af;
     color: $primary-black;
     font-size: 0.95em;
     padding: 0;
-    
+
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
     -moz-appearance: textfield;
+  }
+}
+
+// Premium Customer Dashboard Styling Extensions
+// Premium Customer Dashboard Styling Extensions
+.user-quick-profile-card {
+  background: linear-gradient(
+    135deg,
+    $primary-black 0%,
+    lighten($primary-black, 8%) 100%
+  );
+  border-radius: 12px;
+  color: $primary-white;
+
+  .avatar-placeholder {
+    width: 64px;
+    height: 64px;
+    background-color: rgba($primary-white, 0.1);
+    border: 2px solid rgba($primary-white, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: $primary-color;
+  }
+}
+
+.customer-dashboard-stat-card {
+  border: none;
+  background-color: $primary-white;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba($primary-black, 0.05) !important;
+  }
+
+  .icon-shape {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+}
+
+.account-sidebar {
+  border-radius: 12px;
+  overflow: hidden;
+
+  ul li {
+    margin: 2px 8px;
+    .account-sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      color: rgba($primary-black, 0.8);
+      font-weight: 500;
+      font-size: 0.95em;
+      border-radius: 8px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-transform: capitalize;
+
+      .account-sidebar-icon {
+        color: rgba($primary-black, 0.4);
+        transition: color 0.25s ease;
+      }
+
+      &:hover {
+        color: $secondary-color;
+        background-color: rgba($secondary-color, 0.06);
+        .account-sidebar-icon {
+          color: $secondary-color;
+          transform: translateX(2px);
+        }
+      }
+
+      &.active {
+        background-color: $secondary-color;
+        color: $primary-white;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba($secondary-color, 0.25);
+        .account-sidebar-icon {
+          color: $primary-white;
+        }
+      }
+
+      &.logout-link:hover {
+        background-color: rgba(#dc3545, 0.08);
+        color: #dc3545;
+        .account-sidebar-icon {
+          color: #dc3545;
+        }
+      }
+    }
+  }
+}
+
+// Custom Customer Order Table Enhancements
+.customer-orders-card {
+  border-radius: 12px;
+  background-color: $primary-white;
+
+  .table {
+    thead th {
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba($primary-black, 0.5);
+      border-bottom: 2px solid rgba($primary-black, 0.05);
+      padding: 14px 16px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba($primary-black, 0.04);
+      transition: background-color 0.2s ease;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: rgba($secondary-color, 0.02);
+      }
+    }
+  }
+
+  // Unified customized fulfillment state indicators
+  .badge-fulfillment {
+    padding: 6px 12px;
+    font-weight: 600;
+    border-radius: 30px;
+    font-size: 0.82em;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+  }
+}
+
+// Custom Wishlist Matrix & Product Deck Extensions
+.wishlist-item-card {
+  border: none;
+  background-color: $primary-white;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba($primary-black, 0.06) !important;
+    
+    .wishlist-img-overlay {
+      opacity: 1;
+    }
+  }
+
+  .wishlist-img-container {
+    height: 260px;
+    background-color: rgba($primary-black, 0.02);
+    position: relative;
+  }
+
+  .wishlist-img-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+}
+
+// Custom Shipping Address Dashboard Layouts
+.address-card {
+  border: 1px solid rgba($primary-black, 0.08);
+  background-color: $primary-white;
+  border-radius: 10px;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    border-color: rgba($primary-color, 0.4);
+    box-shadow: 0 6px 15px rgba($primary-black, 0.04) !important;
+  }
+
+  .badge-address-type {
+    font-size: 0.78em;
+    font-weight: 600;
+    padding: 4px 10px;
+    letter-spacing: 0.3px;
+  }
+}
+
+.btn-icon-action {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: rgba($primary-black, 0.5);
+  background-color: rgba($primary-black, 0.02);
+
+  &:hover {
+    background-color: rgba($primary-color, 0.1);
+    color: $primary-color;
+  }
+  
+  &.delete-hover:hover {
+    background-color: rgba(#dc3545, 0.1);
+    color: #dc3545;
   }
 }

@@ -1,9 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-// Route Guard component
+// Route Guard component definitions
 import { AdminRequireAuth } from "./components/admin/AdminRequireAuth";
 import { AdminAuthProvider } from "./components/context/AdminAuth";
+import { AccountRequireAuth } from "./components/account/AccountRequireAuth";
+import { AccountAuthProvider } from "./components/context/AccountAuth";
+import { GuestRequireAuth } from "./components/account/GuestRequireAuth";
+
+// Admin
 
 import Home from "./components/Home";
 import Shop from "./components/Shop";
@@ -33,59 +38,88 @@ import ChangePassword from "./components/admin/ChangePassword";
 import Profile from "./components/admin/Profile";
 
 // Account Views
-import Register from "./components/Register";
-
+import { default as AccountRegister } from "./components/Register";
+import { default as AccountLogin } from "./components/Login";
+import { default as AccountProfile } from "./components/account/Profile";
+import { default as AccountOrders } from "./components/account/Orders";
+import { default as AccountWishlist } from "./components/account/Wishlist";
+import AccountAddress from "./components/account/ShippingAddress";
+import AccountChangePassword from "./components/account/ChangePassword";
 
 function App() {
   return (
     <AdminAuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Public Consumer Frontend Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/product/:id" element={<Products />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/account/register" element={<Register />} />
+      <AccountAuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* =========================================================================
+                🌐 PUBLIC CONSUMER FRONTEND ROUTES
+               ========================================================================= */}
+            <Route path="/" element={<Home />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="product/:id" element={<Products />} />
+            <Route path="cart" element={<Cart />} />  
+            <Route path="checkout" element={<Checkout />} />          
 
-          {/* Admin Authentication Entryway */}
-          <Route path="/admin/login" element={<Login />} />
+             {/* ✅ THE GUEST INTERCEPTOR GROUP: Blocks authenticated users from re-login */}
+            <Route element={<GuestRequireAuth />}>
+              <Route path="account/register" element={<AccountRegister />} />
+              <Route path="account/login" element={<AccountLogin />} />
+            </Route>
 
-          {/* ✅ THE SUPER-LEVEL ARCHITECTURE: Nested Admin Core Route Protection */}
-          <Route element={<AdminRequireAuth />}>
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            
-            {/* Category Sub-Resource Group */}
-            <Route path="/admin/categories" element={<ShowCategories />} />
-            <Route path="/admin/categories/create" element={<CreateCategory />} />
-            <Route path="/admin/categories/edit/:id" element={<EditCategory />} />
+            {/* Admin Authentication Entryway */}
+            <Route path="admin/login" element={<Login />} />
 
-            {/* Brand Sub-Resource Group */}
-            <Route path="/admin/brands" element={<ShowBrands />} />
-            <Route path="/admin/brands/create" element={<CreateBrands />} />
-            <Route path="/admin/brands/edit/:id" element={<EditBrands />} />
+            {/* =========================================================================
+                🛍️ NESTED CUSTOMER CORE ROUTE PROTECTION (Account/Shopper Domain)
+               ========================================================================= */}
+            <Route element={<AccountRequireAuth />}>
+              {/* Secures checkout screens so only authorized accounts can commit orders */}
+              <Route path="account/profile" element={<AccountProfile />} />              
+              <Route path="account/orders" element={<AccountOrders />} />
+              <Route path="account/wishlist" element={<AccountWishlist />} />
+              <Route path="account/shipping-address" element={<AccountAddress />} />
+              <Route path="account/change-password" element={<AccountChangePassword />} />
+              {/* Proactive expansion slot: Add future routes like /account/orders here */}
+            </Route>
 
-            {/* Product Management Sub-Resource Group */}
-            <Route path="/admin/products" element={<ShowProducts />} />
-            <Route path="/admin/products/create" element={<CreateProducts />} />
-            <Route path="/admin/products/edit/:id" element={<EditProducts />} />
+            {/* =========================================================================
+                🔒 NESTED ADMIN CORE ROUTE PROTECTION (Management Panel Domain)
+               ========================================================================= */}
+            <Route element={<AdminRequireAuth />}>
+              <Route path="admin/dashboard" element={<Dashboard />} />
+              
+              {/* Category Sub-Resource Group */}
+              <Route path="admin/categories" element={<ShowCategories />} />
+              <Route path="admin/categories/create" element={<CreateCategory />} />
+              <Route path="admin/categories/edit/:id" element={<EditCategory />} />
 
-            {/* Profile Sub-Resource Group */}
-            <Route path="/admin/profile" element={<Profile />} />
-            <Route path="/admin/change-password" element={<ChangePassword />} />
-          </Route>
+              {/* Brand Sub-Resource Group */}
+              <Route path="admin/brands" element={<ShowBrands />} />
+              <Route path="admin/brands/create" element={<CreateBrands />} />
+              <Route path="admin/brands/edit/:id" element={<EditBrands />} />
 
-        </Routes>
-      </BrowserRouter>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        theme="colored"
-      />
+              {/* Product Management Sub-Resource Group */}
+              <Route path="admin/products" element={<ShowProducts />} />
+              <Route path="admin/products/create" element={<CreateProducts />} />
+              <Route path="admin/products/edit/:id" element={<EditProducts />} />
+
+              {/* Profile Sub-Resource Group */}
+              <Route path="admin/profile" element={<Profile />} />
+              <Route path="admin/change-password" element={<ChangePassword />} />
+            </Route>
+
+          </Routes>
+        </BrowserRouter>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          theme="colored"
+        />
+      </AccountAuthProvider>
     </AdminAuthProvider>
   );
 }
