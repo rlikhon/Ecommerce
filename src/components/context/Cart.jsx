@@ -73,6 +73,12 @@ export const CartProvider = ({ children }) => {
         setCartData(prev => prev.filter(item => item.id !== id));
     };
 
+    const clearCart = () => {
+        localStorage.removeItem("cart");
+        setCartData([]);
+    };
+
+
     // =========================================================================
     // ✅ THE O(N) MEMOIZED PERFORMANCE FIX: Caches mathematical totals 
     // Calculations only run when cartData actually mutates, dropping load to 0ms
@@ -98,6 +104,7 @@ export const CartProvider = ({ children }) => {
                 addToCart, 
                 updateQuantity, 
                 removeFromCart,
+                clearCart,
                 // ✅ Pass static memoized data metrics values instead of raw functions
                 subTotal: cartTotals.subTotal,
                 shipping: cartTotals.cartTotals?.shipping || "0.00", 

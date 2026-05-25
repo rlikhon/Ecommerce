@@ -66,14 +66,12 @@ const Create = ({ placeholder }) => {
 
   const saveProduct = async (data) => {
     const formData = { ...data, description: content, gallary: gallary };
-    console.log(formData);
-
+    
     try {
       const res = await createProductService(formData);
       toast.success(res.data.message || "Product created");
       navigate("/admin/products");
-    } catch (error) {
-      //toast.error(error.response.data.message || "Something went wrong");
+    } catch (error) {      
       const formErrors = error.response.data.errors;
       Object.keys(formErrors).forEach((field) => {
         setError(field, {

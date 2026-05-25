@@ -46,9 +46,12 @@ const Orders = () => {
   const getStatusBadgeConfig = (status) => {
     switch (status?.toLowerCase()) {
       case "delivered": return { bg: "success", text: "Delivered" };
-      case "pending":   return { bg: "warning", text: "Processing" };
-      case "shipped":   return { bg: "info", text: "In Transit" };
-      case "cancelled": return { bg: "danger", text: "Cancelled" };
+      case "pending":   return { bg: "warning", text: "Pending" };
+      case "processing": return { bg: "warning", text: "Processing" };
+      case "shipped":   return { bg: "info", text: "In-Transit" };
+      case "cancelled": return { bg: "danger", text: "Cancelled" }; 
+      case "returned":  return { bg: "danger", text: "Returned" };
+      case "failed":    return { bg: "danger", text: "Failed" };
       default:          return { bg: "secondary", text: status };
     }
   };

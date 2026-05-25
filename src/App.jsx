@@ -58,8 +58,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="shop" element={<Shop />} />
             <Route path="product/:id" element={<Products />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
+            <Route path="cart" element={<Cart />} />            
 
             {/* THE GUEST INTERCEPTOR GROUP: Blocks authenticated users from re-login */}
             <Route element={<GuestRequireAuth />}>
@@ -75,6 +74,9 @@ function App() {
                ========================================================================= */}
             <Route element={<AccountRequireAuth />}>
               {/* Secures checkout screens so only authorized accounts can commit orders */}
+              <Route path="checkout" element={<Checkout />} />
+
+              {/* Account Sub-Resource Group */}
               <Route path="account/profile" element={<AccountProfile />} />
               <Route path="account/orders" element={<AccountOrders />} />
               <Route path="account/wishlist" element={<AccountWishlist />} />
