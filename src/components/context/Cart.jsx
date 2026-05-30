@@ -78,6 +78,14 @@ export const CartProvider = ({ children }) => {
         setCartData([]);
     };
 
+    const getTotalCartQty = () => {
+        if(cartData){
+            return cartData.reduce((sum, item) => sum + item.qty, 0);
+        } else {
+            return 0;
+        }
+    };
+
 
     // =========================================================================
     // ✅ THE O(N) MEMOIZED PERFORMANCE FIX: Caches mathematical totals 
@@ -86,11 +94,13 @@ export const CartProvider = ({ children }) => {
     const cartTotals = useMemo(() => {
         // High-performance single-pass array reduction mapping
         const subTotalValue = cartData.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+        const totalDiscount = 0;
         const shippingValue = subTotalValue > 0 ? 0 : 0; // Adjust logic condition for free shipping thresholds here
-        const grandTotalValue = subTotalValue + shippingValue;
+        const grandTotalValue = subTotalValue - totalDiscount + shippingValue;
 
         return {
             subTotal: subTotalValue.toFixed(2),
+            totalDiscount: totalDiscount.toFixed(2),
             shipping: shippingValue.toFixed(2),
             grandTotal: grandTotalValue.toFixed(2)
         };
@@ -105,9 +115,11 @@ export const CartProvider = ({ children }) => {
                 updateQuantity, 
                 removeFromCart,
                 clearCart,
+                getTotalCartQty,
                 // ✅ Pass static memoized data metrics values instead of raw functions
                 subTotal: cartTotals.subTotal,
-                shipping: cartTotals.cartTotals?.shipping || "0.00", 
+                shipping: cartTotals.shipping,
+                totalDiscount: cartTotals.totalDiscount,
                 grandTotal: cartTotals.grandTotal
             }}
         >

@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { User, ShoppingBag, Flame, LayoutDashboard } from "lucide-react";
 import { AdminAuthContext } from "../context/AdminAuth";
 import { useCategories } from "../../hooks/useCategories";
+import { CartContext } from "../context/Cart";
 import Logo from "../../assets/images/logo.png";
 
 const Header = () => {
@@ -35,6 +36,7 @@ const Header = () => {
   // Create an explicit URL parameter lookup query reference context block
   const currentQueryParams = new URLSearchParams(location.search);
   const activeCategoryQuery = currentQueryParams.get("categories");
+  const { getTotalCartQty } = useContext(CartContext);
 
   return (
     <header className="shadow-sm">
@@ -124,13 +126,16 @@ const Header = () => {
                   <span>Admin Hub</span>
                 </Link>
               ) : (
-                <Link to="/admin/login" className="header-icon-trigger" aria-label="Account Login Profile">
+                <Link to="/account/login" className="header-icon-trigger" aria-label="Account Login Profile">
                   <User size={22} />
                 </Link>
               )}
 
               <Link to="/cart" className="header-icon-trigger" aria-label="View Shopping Cart Layout">
-                <ShoppingBag size={22} />
+                <div className="cart-bucket">
+                  <ShoppingBag size={22} />
+                  <span className="cart-count">{getTotalCartQty()}</span>
+                </div>
               </Link>
             </div>
           </Navbar.Collapse>

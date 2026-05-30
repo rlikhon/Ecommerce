@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("cod");  
-  const { cartData, grandTotal, subTotal, shipping, clearCart } =
+  const { cartData, grandTotal, subTotal, shipping, totalDiscount, clearCart } =
     useContext(CartContext);
 
   const navigate = useNavigate();
@@ -42,6 +42,7 @@ const Checkout = () => {
     payment_status: paymentStatus,
     sub_total: subTotal,
     shipping_charges: shipping,
+    discount: totalDiscount,
     grand_total: grandTotal,
     status: "pending",
     cart: cartData 
@@ -282,6 +283,10 @@ const Checkout = () => {
                     <div className="d-flex justify-content-between py-2 border-bottom border-white">
                       <div className="text-secondary small">Shipping Cost</div>
                       <div className="fw-semibold text-dark">${shipping}</div>
+                    </div>
+                    <div className="d-flex justify-content-between py-2 border-bottom border-white">
+                      <div className="text-secondary small">Total Discount</div>
+                      <div className="fw-semibold text-dark">${totalDiscount}</div>
                     </div>
                     <div className="d-flex justify-content-between py-3">
                       <div>

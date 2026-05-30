@@ -7,7 +7,7 @@ import DefaultProductImg from "../assets/images/Mens/five.jpg";
 
 const Cart = () => {
   // ✅ THE FIX 1: Destructure your state setters and action methods from CartContext cleanly
-  const { cartData, setCartData, grandTotal, subTotal, shipping, removeFromCart } = useContext(CartContext);
+  const { cartData, setCartData, grandTotal, subTotal, shipping, totalDiscount, removeFromCart } = useContext(CartContext);
 
   return (
     <Layout>
@@ -133,6 +133,10 @@ const Cart = () => {
                 <div className="d-flex justify-content-between py-2 border-bottom border-white">
                   <div className="text-secondary small">Shipping Cost</div>
                   <div className="fw-semibold text-dark">${shipping}</div>
+                </div>
+                <div className="d-flex justify-content-between py-2 border-bottom border-white">
+                  <div className="text-secondary small">Total Discount</div>
+                  <div className="fw-semibold text-dark">${totalDiscount}</div>
                 </div>
                 <div className="d-flex justify-content-between py-3">
                   <div><strong className="text-dark">Grand Total</strong></div>
