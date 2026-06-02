@@ -16,3 +16,11 @@ export const createCustomerOrderService = (orderData, customerToken) => {
     }
   });
 };
+
+export const getOrderByIdService = (orderId, customerToken) => {
+  return publicClient.get(`/account/order/${orderId}`, {
+    headers: {
+      Authorization: `Bearer ${customerToken}`
+    }
+  });
+};
