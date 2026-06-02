@@ -15,6 +15,7 @@ import Shop from "./components/Shop";
 import Products from "./components/Products";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import Confirmation from "./components/Confirmation";
 import Login from "./components/admin/Login";
 import Dashboard from "./components/admin/Dashboard";
 
@@ -75,6 +76,7 @@ function App() {
             <Route element={<AccountRequireAuth />}>
               {/* Secures checkout screens so only authorized accounts can commit orders */}
               <Route path="checkout" element={<Checkout />} />
+              <Route path="order/confirmation/:id" element={<Confirmation />} />
 
               {/* Account Sub-Resource Group */}
               <Route path="account/profile" element={<AccountProfile />} />

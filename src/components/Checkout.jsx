@@ -53,7 +53,7 @@ const Checkout = () => {
     
     toast.success(response.data.message || "Order placed successfully!");
     if (clearCart) clearCart();
-    navigate('/account/orders');
+    navigate(`/order/confirmation/${response.data.order.id}`);
     
   } catch (error) {    
     console.warn("Transaction execution halted by global client interceptor.");
