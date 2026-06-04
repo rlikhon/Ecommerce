@@ -448,7 +448,7 @@ footer {
   }
 }
 
-@media (min-width: 200px) and (max-width: 768px px) {
+@media (min-width: 200px) and (max-width: 768px) {
   .section-1 {
     .swiper {
       .swiper-wrapper {
@@ -998,5 +998,20 @@ $add-to-cart-btn-color-disabled-text: #9ca3af;
   &.delete-hover:hover {
     background-color: rgba(#dc3545, 0.1);
     color: #dc3545;
+  }
+}
+
+// Order Confirmation Page — checkmark entrance animation
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
   }
 }
