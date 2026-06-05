@@ -43,6 +43,7 @@ import { default as AccountRegister } from "./components/Register";
 import { default as AccountLogin } from "./components/Login";
 import { default as AccountProfile } from "./components/account/Profile";
 import { default as AccountOrders } from "./components/account/Orders";
+import { default as OrderDetail } from "./components/account/OrderDetails";
 import { default as AccountWishlist } from "./components/account/Wishlist";
 import AccountAddress from "./components/account/ShippingAddress";
 import AccountChangePassword from "./components/account/ChangePassword";
@@ -81,6 +82,7 @@ function App() {
               {/* Account Sub-Resource Group */}
               <Route path="account/profile" element={<AccountProfile />} />
               <Route path="account/orders" element={<AccountOrders />} />
+              <Route path="account/orders/:id/" element={<OrderDetail />} />
               <Route path="account/wishlist" element={<AccountWishlist />} />
               <Route
                 path="account/shipping-address"

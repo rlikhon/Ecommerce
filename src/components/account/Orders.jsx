@@ -49,13 +49,23 @@ const Orders = () => {
       case "pending":   return { bg: "warning", text: "Pending" };
       case "processing": return { bg: "warning", text: "Processing" };
       case "shipped":   return { bg: "info", text: "In-Transit" };
-      case "cancelled": return { bg: "danger", text: "Cancelled" }; 
-      case "returned":  return { bg: "danger", text: "Returned" };
+      case "cancelled": return { bg: "danger", text: "Cancelled" };       
       case "failed":    return { bg: "danger", text: "Failed" };
       default:          return { bg: "secondary", text: status };
     }
   };
 
+  const getPaymentStatusBadgeConfig = (payment_status) => {
+    switch (payment_status?.toLowerCase()) {
+      case "paid": return { bg: "success", text: "Paid" };
+      case "unpaid": return { bg: "warning", text: "Unpaid" };
+      case "partial_paid_due": return { bg: "warning", text: "Partial Payment - Due" };
+      case "refunded":  return { bg: "danger", text: "Refunded" };
+      case "failed":  return { bg: "danger", text: "Failed" };
+      default:          return { bg: "secondary", text: payment_status };
+    }
+  };
+  
   return (
     <Layout>
       <div className="container py-4">
@@ -103,12 +113,14 @@ const Orders = () => {
                           <th><Calendar size={13} className="me-1" /> Order Date</th>
                           <th><DollarSign size={13} className="me-1" /> Grand Total</th>
                           <th><Activity size={13} className="me-1" /> Status</th>
+                          <th><Activity size={13} className="me-1" /> Payment Status</th>
                           <th className="text-end pe-4">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {orders.map((order) => {
                           const badgeConfig = getStatusBadgeConfig(order.status);
+                          const badgeConfigPayment = getPaymentStatusBadgeConfig(order.payment_status);
                           return (
                             <tr key={order.id || order.order_number}>
                               {/* Reference Identity Number */}
@@ -132,6 +144,13 @@ const Orders = () => {
                               <td>
                                 <Badge bg={badgeConfig.bg} className="badge-fulfillment shadow-none">
                                   {badgeConfig.text}
+                                </Badge>
+                              </td>
+
+                               {/* Payment Status Badge Selection */}
+                              <td>
+                                <Badge bg={badgeConfigPayment.bg} className="badge-fulfillment shadow-none">
+                                  {badgeConfigPayment.text}
                                 </Badge>
                               </td>
                               
