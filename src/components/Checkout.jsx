@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Checkout = () => {
-  const [paymentMethod, setPaymentMethod] = useState("cod");  
+  const [paymentMethod, setPaymentMethod] = useState("cod");
   const { cartData, grandTotal, subTotal, shipping, totalDiscount, clearCart } =
     useContext(CartContext);
 
@@ -31,37 +31,35 @@ const Checkout = () => {
   const processOrder = (data) => {
     if (paymentMethod == "cod") {
       // create order
-      saveOrder(data, "pending");
+      saveOrder(data, "unpaid");
     }
   };
 
   const saveOrder = async (formData, paymentStatus) => {
-  const orderData = {
-    ...formData,      
-    payment_method: paymentMethod,
-    payment_status: paymentStatus,
-    sub_total: subTotal,
-    shipping_charges: shipping,
-    discount: totalDiscount,
-    grand_total: grandTotal,
-    status: "pending",
-    cart: cartData 
+    const orderData = {
+      ...formData,
+      payment_method: paymentMethod,
+      payment_status: paymentStatus,
+      sub_total: subTotal,
+      shipping_charges: shipping,
+      discount: totalDiscount,
+      grand_total: grandTotal,
+      status: "pending",
+      cart: cartData,
+    };
+
+    try {
+      const response = await createCustomerOrderService(orderData);
+
+      toast.success(response.data.message || "Order placed successfully!");
+      if (clearCart) clearCart();
+      navigate(`/order/confirmation/${response.data.order.id}`);
+    } catch (error) {
+      console.warn(
+        "Transaction execution halted by global client interceptor.",
+      );
+    }
   };
-
-  try {    
-    const response = await createCustomerOrderService(orderData);
-    
-    toast.success(response.data.message || "Order placed successfully!");
-    if (clearCart) clearCart();
-    navigate(`/order/confirmation/${response.data.order.id}`);
-    
-  } catch (error) {    
-    console.warn("Transaction execution halted by global client interceptor.");
-  }
-};
-
-
-
 
   return (
     <Layout>
@@ -286,7 +284,9 @@ const Checkout = () => {
                     </div>
                     <div className="d-flex justify-content-between py-2 border-bottom border-white">
                       <div className="text-secondary small">Total Discount</div>
-                      <div className="fw-semibold text-dark">${totalDiscount}</div>
+                      <div className="fw-semibold text-dark">
+                        ${totalDiscount}
+                      </div>
                     </div>
                     <div className="d-flex justify-content-between py-3">
                       <div>
