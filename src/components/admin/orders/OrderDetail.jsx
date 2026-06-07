@@ -5,6 +5,64 @@ import Layout from "./../../common/Layout";
 import Sidebar from "./../../common/Sidebar";
 import { Link } from "react-router-dom";
 
+
+  /* ─── helpers ─────────────────────────────────────────────────────────── */
+const fmt = (n) =>
+  Number(n ?? 0).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+const fmtDate = (d) =>
+  new Date(d).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+const STATUS_META = {
+  pending: { color: "#f59e0b", bg: "#fffbeb", label: "Pending" },
+  processing: { color: "#3b82f6", bg: "#eff6ff", label: "Processing" },
+  shipped: { color: "#06b6d4", bg: "#ecfeff", label: "Shipped" },
+  delivered: { color: "#10b981", bg: "#ecfdf5", label: "Delivered" },
+  cancelled: { color: "#ef4444", bg: "#fef2f2", label: "Cancelled" },
+  failed: { color: "#ef4444", bg: "#fef2f2", label: "Failed" },
+};
+
+const StatusBadge = ({ status }) => {
+  const meta = STATUS_META[status?.toLowerCase()] ?? {
+    color: "#6b7280",
+    bg: "#f3f4f6",
+    label: status,
+  };
+return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        padding: "4px 12px",
+        borderRadius: 20,
+        fontSize: 13,
+        fontWeight: 600,
+        color: meta.color,
+        backgroundColor: meta.bg,
+      }}
+    >
+      <span
+        style={{
+          width: 7,
+          height: 7,
+          borderRadius: "50%",
+          backgroundColor: meta.color,
+          display: "inline-block",
+        }}
+      />
+      {meta.label}
+    </span>
+  );
+};
+
 export default function OrderDetailPage() {
   const { orderId } = useParams();
   const { order, loading, error, confirmOrder, updateStatus } =
