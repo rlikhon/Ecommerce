@@ -34,6 +34,10 @@ import { default as ShowProducts } from "./components/admin/product/Show";
 import { default as CreateProducts } from "./components/admin/product/Create";
 import { default as EditProducts } from "./components/admin/product/Edit";
 
+//Order Views
+import { default as OrdersListPage } from "./components/admin/orders/OrdersListPage";
+import { default as OrderDetailPage } from "./components/admin/orders/OrderDetail";
+
 // Profile Views
 import ChangePassword from "./components/admin/ChangePassword";
 import Profile from "./components/admin/Profile";
@@ -141,6 +145,11 @@ function App() {
                 element={<EditProducts />}
               />
 
+
+              {/* Order Management Sub-Resource Group */}
+              <Route path="admin/orders" element={<OrdersListPage />} />
+              <Route path="admin/orders/:orderId" element={<OrderDetailPage />} />
+              
               {/* Profile Sub-Resource Group */}
               <Route path="admin/profile" element={<Profile />} />
               <Route

@@ -1,5 +1,5 @@
+import client from "./../api/client";
 import axios from "axios";
-import client from "../api/client";
 
 export const showProductService = () => client.get(`/admin/products`);
 

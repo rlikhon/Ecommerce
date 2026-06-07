@@ -1,6 +1,6 @@
 
-import publicClient from "@api/publicClient";
-import client from "@api/client";
+import client from "./../api/client";
+import publicClient from "./../api/publicClient";
 
 // Fetch full purchase registries based on the active logged-in token matrix
 export const getCustomerOrdersService = () => {
