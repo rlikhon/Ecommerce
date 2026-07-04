@@ -1,18 +1,13 @@
 // src/hooks/useAdminOrderDetail.ts
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { OrderService } from "../services/OrderServices";
 
 export function useAdminOrderDetail(orderId) {
   const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!orderId) return;
-    fetchOrderDetail();
-  }, [orderId]);
-
-  const fetchOrderDetail = async () => {
+  const fetchOrderDetail = useCallback(async () => {
     try {
       setLoading(true);
       const data = await OrderService.getAdminOrderDetail(orderId);
@@ -23,7 +18,14 @@ export function useAdminOrderDetail(orderId) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [orderId]);
+
+  useEffect(() => {
+    if (!orderId) return; // guard here — not inside the callback
+    fetchOrderDetail();
+  }, [orderId, fetchOrderDetail]);
+
+  
 
   const confirmOrder = async (description = null) => {
     try {

@@ -78,8 +78,9 @@ export class OrderService {
   }
 
   static async getAdminOrderDetail(orderId) {
-    try {
+    try {      
       const response = await adminOrderAPI.getById(orderId);
+      
       return response.data;
     } catch (error) {
       console.error("Failed to fetch order detail:", error);

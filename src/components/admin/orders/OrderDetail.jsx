@@ -93,6 +93,17 @@ export default function OrderDetailPage() {
     };
   };
 
+  const handleDownload = () => {
+    const html = buildInvoiceHTML(order);
+    const w = window.open("", "_blank", "width=900,height=700");
+    w.document.write(html);
+    w.document.close();
+    w.onload = () => {
+      w.focus();
+      w.print();
+    };
+  };
+
   /* ── states ── */
   if (loading)
     return (
@@ -123,7 +134,7 @@ export default function OrderDetailPage() {
         </div>
       </Layout>
     );
-  console.log(order);
+
   const total = Number(order.grand_total ?? order.total ?? 0);
   const items = order.items ?? [];
 
@@ -238,9 +249,9 @@ export default function OrderDetailPage() {
           <div className="row">
             <div className="d-flex justify-content-between mt-5 pb-3">
               <h4 className="h4 pb-0 mb-0">Your Title</h4>
-              <Link to="/admin/orders" className="btn btn-primary">
+              {/*--<Link to="/admin/orders" className="btn btn-primary">
                 Button
-              </Link>
+              </Link>*/}
             </div>
             <div className="col-md-3 col-lg-3">
               <Sidebar />
@@ -257,7 +268,7 @@ export default function OrderDetailPage() {
               >
                 <div>
                   <Link
-                    to="/account/orders"
+                    to="/admin/orders"
                     style={{
                       fontSize: 13,
                       color: "#6b7280",
