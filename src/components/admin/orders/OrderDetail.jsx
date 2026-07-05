@@ -64,7 +64,7 @@ const StatusBadge = ({ status }) => {
 };
 /* ─── inline invoice template (print-ready) ───────────────────────────── */
 const buildInvoiceHTML = (order) => {
-//
+  alert('Under development');
 }
 export default function OrderDetailPage() {
   const { orderId } = useParams();
@@ -93,7 +93,7 @@ export default function OrderDetailPage() {
     };
   };
 
-  const handleDownload = () => {
+  const handleDownload = () => {    
     const html = buildInvoiceHTML(order);
     const w = window.open("", "_blank", "width=900,height=700");
     w.document.write(html);
@@ -248,7 +248,7 @@ export default function OrderDetailPage() {
         <div className="container">
           <div className="row">
             <div className="d-flex justify-content-between mt-5 pb-3">
-              <h4 className="h4 pb-0 mb-0">Your Title</h4>
+              <h4 className="h4 pb-0 mb-0">Order Details</h4>
               {/*--<Link to="/admin/orders" className="btn btn-primary">
                 Button
               </Link>*/}
